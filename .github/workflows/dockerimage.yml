@@ -17,4 +17,4 @@ jobs:
         name: 337593502545.dkr.ecr.us-east-2.amazonaws.com/boilertalk/alpine-docker-ssh-client
         username: AWS
         password: ${{ secrets.AWS_REGISTRY_TOKEN }}
-        registry: ${{ secrets.AWS_REGISTRY_URL }}
+        registry: https://337593502545.dkr.ecr.us-east-2.amazonaws.com
