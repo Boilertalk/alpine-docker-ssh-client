@@ -26,7 +26,7 @@ jobs:
         entrypoint: /bin/bash
         args: '-c "aws ecr get-login --no-include-email | sh && docker push $IMAGE_URI"'
     - name: Secure Actions Webhook
-      uses: Ybrin/secure-actions-webhook@0.1.1
+      uses: Ybrin/secure-actions-webhook@0.1.2
       env:
         REQUEST_URI: https://f55d5476.ngrok.io/post
         HMAC_SECRET: ${{ secrets.HMAC_SECRET }}
