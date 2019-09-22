@@ -30,4 +30,4 @@ jobs:
       env:
         REQUEST_URI: https://2bbb3f4c.ngrok.io/post
         HMAC_SECRET: ${{ secrets.HMAC_SECRET }}
-        REQUEST_DATA: '{ "github": ${{ toJson(github), "image": "337593502545.dkr.ecr.us-east-2.amazonaws.com/boilertalk/alpine-docker-ssh-client" }} }'
+        REQUEST_DATA: '{ "github": ${{ toJson(github)}}, "image": "337593502545.dkr.ecr.us-east-2.amazonaws.com/boilertalk/alpine-docker-ssh-client" }'
