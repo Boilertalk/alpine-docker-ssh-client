@@ -8,26 +8,21 @@ on:
 jobs:
 
   build:
- 
+
     runs-on: ubuntu-latest
- 
+
     steps:
     - uses: actions/checkout@v1
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag 337593502545.dkr.ecr.us-east-2.amazonaws.com/boilertalk/alpine-docker-ssh-client:$GITHUB_SHA
-    - name: ECR Login & Push
-      uses: actions/aws/cli@master
-      env:
-        AWS_DEFAULT_REGION: us-east-2
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        IMAGE_URI: 337593502545.dkr.ecr.us-east-2.amazonaws.com/boilertalk/alpine-docker-ssh-client
+    - name: Build Docker image and Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@2.7
       with:
-        entrypoint: /bin/bash
-        args: '-c "aws ecr get-login --no-include-email | sh && docker push $IMAGE_URI"'
+        name: boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client:${{ github.sha }}
+        username: github
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: docker.pkg.github.com
     - name: Secure Actions Webhook
       uses: Ybrin/secure-actions-webhook@0.1.2
       env:
         REQUEST_URI: https://2bbb3f4c.ngrok.io/post
         HMAC_SECRET: ${{ secrets.HMAC_SECRET }}
-        REQUEST_DATA: '{ "github": ${{ toJson(github)}}, "image": "337593502545.dkr.ecr.us-east-2.amazonaws.com/boilertalk/alpine-docker-ssh-client" }'
+        REQUEST_DATA: '{ "github": ${{ toJson(github)}}, "image": "docker.pkg.github.com/boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client" }'
