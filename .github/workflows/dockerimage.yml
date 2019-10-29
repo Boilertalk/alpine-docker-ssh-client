@@ -23,7 +23,7 @@ jobs:
     - name: Tag latest docker image
       run: >
         if [ $GITHUB_REF == "refs/heads/master" ]; then
-          echo $GITHUB_TOKEN | docker login --username github --password-stdin
+          echo $GITHUB_TOKEN | docker login --username github --password-stdin docker.pkg.github.com
           docker tag docker.pkg.github.com/boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client:$GITHUB_SHA docker.pkg.github.com/boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client:latest;
           docker push docker.pkg.github.com/boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client:latest;
         fi
