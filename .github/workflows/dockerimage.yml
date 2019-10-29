@@ -22,6 +22,7 @@ jobs:
         registry: docker.pkg.github.com
     - name: Retag Docker Image
       uses: Ybrin/retag-docker-image@0.1.0
+      if: github.ref == 'refs/head/master'
       with:
         registry: docker.pkg.github.com
         name: boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client
