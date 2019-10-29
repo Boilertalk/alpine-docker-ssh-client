@@ -23,7 +23,7 @@ jobs:
     - name: Tag latest docker image
       run: >
         if [ $GITHUB_REF == "refs/heads/master" ]; then
-          echo $GITHUB_TOKEN | docker login docker.pkg.github.com --username github --password-stdin
+          echo $GITHUB_TOKEN | docker login --username github --password-stdin
           docker tag docker.pkg.github.com/boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client:$GITHUB_SHA docker.pkg.github.com/boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client:latest;
           docker push docker.pkg.github.com/boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client:latest;
         fi
@@ -33,4 +33,3 @@ jobs:
         REQUEST_URI: https://kube-cd.volkncloud.com/
         HMAC_SECRET: ${{ secrets.HMAC_SECRET }}
         REQUEST_DATA: '{ "github": ${{ toJson(github)}}, "image": "docker.pkg.github.com/boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client" }'
-
