@@ -20,15 +20,15 @@ jobs:
         username: github
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
-    - name: Tag latest docker image
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: >
-        if [ $GITHUB_REF == "refs/heads/master" ]; then
-          echo ${GITHUB_TOKEN} | docker login -u github --password-stdin docker.pkg.github.com
-          docker tag docker.pkg.github.com/boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client:$GITHUB_SHA docker.pkg.github.com/boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client:latest;
-          docker push docker.pkg.github.com/boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client:latest;
-        fi
+    - name: Retag Docker Image
+      uses: Ybrin/retag-docker-image@0.1.0
+      with:
+        registry: docker.pkg.github.com
+        name: boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client
+        old_tag: ${{ github.sha }}
+        new_tag: latest
+        username: github
+        password: ${{ secrets.GITHUB_TOKEN }}
     - name: Secure Actions Webhook
       uses: Ybrin/secure-actions-webhook@0.1.2
       env:
