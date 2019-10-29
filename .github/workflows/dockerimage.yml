@@ -23,8 +23,9 @@ jobs:
     - name: Tag latest docker image
       run: >
         if [ $GITHUB_REF == "refs/heads/master" ]; then
-          docker tag docker.pkg.github.com/boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client:$GITHUB_SHA docker.pkg.github.com/boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client:latest
-          docker push docker.pkg.github.com/boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client:latest
+          echo $GITHUB_TOKEN | docker login docker.pkg.github.com --username github --password-stdin
+          docker tag docker.pkg.github.com/boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client:$GITHUB_SHA docker.pkg.github.com/boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client:latest;
+          docker push docker.pkg.github.com/boilertalk/alpine-docker-ssh-client/alpine-docker-ssh-client:latest;
         fi
     - name: Secure Actions Webhook
       uses: Ybrin/secure-actions-webhook@0.1.2
